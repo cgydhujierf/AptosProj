@@ -1,18 +1,13 @@
-function searchRange(nums, target) {
-  let left = 0;
-  let right = nums.length - 1;
-  let start = -1;
-  let end = -1;
-  while (left <= right) {
-    const mid = Math.floor((left + right) / 2);
-    if (nums[mid] === target) {
-      start = mid;
-      end = mid;
-      while (nums[start] === target) start--;
-      while (nums[end] === target) end++;
-      return [start + 1, end - 1];
-    } else if (nums[mid] < target) left = mid + 1;
-    else right = mid - 1;
+function maxProduct(nums) {
+  if (nums.length === 0) return 0;
+  let maxSoFar = nums[0];
+  let minSoFar = nums[0];
+  let maxProduct = nums[0];
+  for (let i = 1; i < nums.length; i++) {
+    const temp = maxSoFar;
+    maxSoFar = Math.max(nums[i], nums[i] * maxSoFar, nums[i] * minSoFar);
+    minSoFar = Math.min(nums[i], nums[i] * temp, nums[i] * minSoFar);
+    maxProduct = Math.max(maxProduct, maxSoFar);
   }
-  return [start, end];
+  return maxProduct;
 }
